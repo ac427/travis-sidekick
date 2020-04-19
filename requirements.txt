@@ -1,0 +1,4 @@
+cryptography
+pyjwt==1.5.3
+pylint
+requests

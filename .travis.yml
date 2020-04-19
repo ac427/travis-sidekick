@@ -1,0 +1,18 @@
+language: python
+python:
+- '3.7'
+env:
+  global:
+  - APP_ID = 61517
+  - secure: QbEEfLLgxolwgAtsmgAqIm4PvcBSfyPlfF1JWO/rIvqESU0fyop7aDrq8TN7cdgCMv/+9SPUFZqOb4o/QVSiu5z870hjkt2uRYNna7uYEVbD02JT/gBCGaRWeeFwRFjfVVM79jLKxvqOX8ScmIkSLwsTBUe2co6iJTNpvKCDY2d1fUbeO2f+4JT+mwfPqK/Bk5Rvhv8k8zzd7crd4cdVApeQZEBHLIg3KWokqMNxVy5HtevvZt9my6mN1+vSpNpfV6QcUqYQoeTQ4pHLF6VUc67KDt4i46F/OvOYRbHThUC3AKqyrMTjxsFzf4eKBsmNtN0GGpT4ZnadDn8WtxT1ZDjxRnGTb7ZTVbiFqQNMopJoFk+dF3p7pPYJ+IwrxjVFgGvnqxoqndBvBAB9v6RI7hTWvGeA/pnean5Ilv6FIYMgB9cpW/sJj9KvCYxLYlb9h1Man1yMtbEXFTmqSICHQKIjwsi4xtHYGpwOoSk0BhpAk3GcHKQD3Dmy7L9Hv8m+bw9Nxd+wsjjSHmBAwiJm8DqlHlhZIa2F7W75+YORmbT+vIwYy3khFgNHx4/aEXU48uT9vQJ9+HvwDx9KYSU3HjVvXJ1fs8m7nsSy8HAECvynSGHjGoMDsLYkUXCwYsx4PUbE5AIdcK5jPT3oiOJ3uP6CVch7/KhKl0IM0Xecr14=
+install:
+- pip3 install -r requirements.txt
+script:
+- echo '```' > deploy.txt
+- pylint ./tortuga_comment.py | tee -a deploy.txt
+- echo '```' >> deploy.txt
+- python3 ./tortuga_comment.py
+before_install:
+- openssl aes-256-cbc -K $encrypted_1cb4ac891e79_key -iv $encrypted_1cb4ac891e79_iv
+  -in travis-sidekick.2020-04-19.private-key.pem.enc -out travis-sidekick.2020-04-19.private-key.pem
+  -d
