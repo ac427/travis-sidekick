@@ -19,7 +19,11 @@ CERT = open(PEM_FILE, 'r').read()
 CERT_BYTES = CERT.encode()
 PRIVATE_KEY = default_backend().load_pem_private_key(CERT_BYTES, None)
 
-
+def status_check(req):
+    """ stdout error code and fail build. """
+    print('Code: ', req.status_code)
+    print('Content: ', req.json())
+    sys.exit(1)
 
 if os.environ['TRAVIS_PULL_REQUEST'] == 'false':
     pass
@@ -39,17 +43,19 @@ else:
 
     HEADERS = {"Authorization": "Bearer {}".format(WEB_TOKEN.decode()),
                "Accept": "application/vnd.github.machine-man-preview+json"}
-
+    # for GHE use  https://github.foo.com/api/v3/app. follow the same pattern at other places
     RESPONSE = requests.get(
         'https://api.github.com/app',
         headers=HEADERS)
+    if RESPONSE.status_code != 200:
+        status_check(RESPONSE)
 
-    print('Code: ', RESPONSE.status_code)
-    print('Content: ', RESPONSE.json())
 
     RESPONSE = requests.post(
         'https://api.github.com/installations/{}/access_tokens'.format(INSTALL_ID),
         headers=HEADERS)
+    if RESPONSE.status_code != 201:
+        status_check(RESPONSE)
 
     TOKEN = RESPONSE.json()['token']
     HEADERS = {"Authorization": "token {}".format(TOKEN)}
@@ -72,11 +78,10 @@ else:
                 url = (comment['url'])
                 requests.delete(url, headers=HEADERS)
     else:
-        print("ALL_COMMENTS exited with error")
-        sys.exit(1)
+        status_check(ALL_COMMENTS)
 
     # post new comment
-    requests.post(
+    RESPONSE = requests.post(
         'https://api.github.com/repos/' +
         REPO_NAME +
         '/issues/' +
@@ -84,3 +89,5 @@ else:
         '/comments',
         data=json.dumps(DATA),
         headers=HEADERS)
+    if RESPONSE.status_code != 201:
+        status_check(RESPONSE)
