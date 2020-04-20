@@ -3,15 +3,15 @@ python:
 - '3.7'
 env:
   global:
-  - APP_ID = 61517
-  - secure: QbEEfLLgxolwgAtsmgAqIm4PvcBSfyPlfF1JWO/rIvqESU0fyop7aDrq8TN7cdgCMv/+9SPUFZqOb4o/QVSiu5z870hjkt2uRYNna7uYEVbD02JT/gBCGaRWeeFwRFjfVVM79jLKxvqOX8ScmIkSLwsTBUe2co6iJTNpvKCDY2d1fUbeO2f+4JT+mwfPqK/Bk5Rvhv8k8zzd7crd4cdVApeQZEBHLIg3KWokqMNxVy5HtevvZt9my6mN1+vSpNpfV6QcUqYQoeTQ4pHLF6VUc67KDt4i46F/OvOYRbHThUC3AKqyrMTjxsFzf4eKBsmNtN0GGpT4ZnadDn8WtxT1ZDjxRnGTb7ZTVbiFqQNMopJoFk+dF3p7pPYJ+IwrxjVFgGvnqxoqndBvBAB9v6RI7hTWvGeA/pnean5Ilv6FIYMgB9cpW/sJj9KvCYxLYlb9h1Man1yMtbEXFTmqSICHQKIjwsi4xtHYGpwOoSk0BhpAk3GcHKQD3Dmy7L9Hv8m+bw9Nxd+wsjjSHmBAwiJm8DqlHlhZIa2F7W75+YORmbT+vIwYy3khFgNHx4/aEXU48uT9vQJ9+HvwDx9KYSU3HjVvXJ1fs8m7nsSy8HAECvynSGHjGoMDsLYkUXCwYsx4PUbE5AIdcK5jPT3oiOJ3uP6CVch7/KhKl0IM0Xecr14=
+  - APP_ID: 61517
+  - secure: ZjS7QvO+hKViriTMbUGyffreBN/4W8wVfJJOP1u3gYs+CApn3Ck7fFWALxjgWnnGCUzp+Z3VwtDJ/SyD2I3IHuexrblqEJXmYRVAZMizwx/VICu+v3nAlYEk6OFlwQTvMROyqPQYbDsEAxANzChXpYS2wWKsfY+F90EyTxer3Jd//cPUR5sSElxrN2S2JNmfoEvL31zAX2N51/rsPi+pKEFttLQ38myuSA56kIbLc6ht1JDBcXp4ulCWyhHeVv1vX9WVUy7Niy6LQh+mIAYeZdP3YEPjAkU5lLJBSXYk6fAv5S89BHNH9Xvtzw4y3ZdoYJYDXBPBTaejcKvDIyEqdQTx5hi4vgb0EP2T5147yJBa/lDs1P2OiEpLD17sA9+mQmuXOCf53IBm/DQJJIpRiA9bkZsqt8LfMpl/tg3JUOs4ZsiZPYrJ16FOPiunuPe0Z/fE3h88IF3CgeEBcnkqDRR8lQ8JvVthHEsrLB079ldR4AZxw9ruIvAL38BiqzbK1nQ5P3WTjvi2DMe4fGfUS43WtxEU9dypcjgQi5xK+tpQALnofwMpTRMLaUFIwpkGC/0U4pg1vxYbK7/DlH899zSK7vDoLN3EPDcY+FgLiKD5s77No2tuO0XO8Ehp2FJQHXPuKcL0EV7h5QKwlTkQE00AlYbIVjpEJjbuYBzRXXU=
 install:
 - pip3 install -r requirements.txt
 script:
 - echo '```' > deploy.txt
-- pylint ./tortuga_comment.py | tee -a deploy.txt
+- pylint ./travis_sidekick.py | tee -a deploy.txt
 - echo '```' >> deploy.txt
-- python3 ./tortuga_comment.py
+- python3 ./travis_sidekick.py
 before_install:
 - openssl aes-256-cbc -K $encrypted_1cb4ac891e79_key -iv $encrypted_1cb4ac891e79_iv
   -in travis-sidekick.2020-04-19.private-key.pem.enc -out travis-sidekick.2020-04-19.private-key.pem
