@@ -1,4 +1,4 @@
 cryptography
-pyjwt==1.5.3
+pyjwt==2.4.0
 pylint
 requests
